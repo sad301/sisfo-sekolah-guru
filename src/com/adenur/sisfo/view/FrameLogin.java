@@ -195,8 +195,7 @@ public class FrameLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = tfUsername.getText();
         char[] password = pfPassword.getPassword();
-        User.Level level = User.Level.OPERATOR_WALIKELAS;
-        User user = new User(username, password, level);
+        User user = new User(username, password, User.Level.OPERATOR_GURU);
         boolean valid = false;
         try {
             valid = userDAO.isValid(user);
@@ -213,7 +212,7 @@ public class FrameLogin extends javax.swing.JFrame {
                 });
             }
             else {
-                String pesan = "Username/password yang anda masukkan salah\nAtau anda tidak terdaftar sebagai wali kelas";
+                String pesan = "Username/password yang anda masukkan salah";
                 JOptionPane.showMessageDialog(this, pesan, "Error", JOptionPane.ERROR_MESSAGE);
             }
         }

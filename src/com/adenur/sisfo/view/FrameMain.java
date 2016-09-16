@@ -38,15 +38,35 @@ public class FrameMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        toolBar = new javax.swing.JToolBar();
+        bNew = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         mFile = new javax.swing.JMenu();
         miLogout = new javax.swing.JMenuItem();
         miExit = new javax.swing.JMenuItem();
         mEdit = new javax.swing.JMenu();
+        miUser = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sistem Informasi Sekolah (Wali Kelas)");
+        setTitle("Sistem Informasi Sekolah -- Guru");
         setMinimumSize(new java.awt.Dimension(800, 600));
+
+        toolBar.setRollover(true);
+
+        bNew.setText("jButton1");
+        bNew.setFocusable(false);
+        bNew.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        bNew.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolBar.add(bNew);
+
+        jButton2.setText("jButton2");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolBar.add(jButton2);
+
+        getContentPane().add(toolBar, java.awt.BorderLayout.NORTH);
 
         mFile.setText("File");
 
@@ -69,20 +89,18 @@ public class FrameMain extends javax.swing.JFrame {
         menuBar.add(mFile);
 
         mEdit.setText("Edit");
+
+        miUser.setText("Data & Akun Aplikasi");
+        miUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miUserActionPerformed(evt);
+            }
+        });
+        mEdit.add(miUser);
+
         menuBar.add(mEdit);
 
         setJMenuBar(menuBar);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
 
         pack();
         setLocationRelativeTo(null);
@@ -105,11 +123,22 @@ public class FrameMain extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_miLogoutActionPerformed
 
+    private void miUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUserActionPerformed
+        // TODO add your handling code here:
+        SwingUtilities.invokeLater(() -> {
+            (new FrameUser(connection)).setVisible(true);
+        });
+    }//GEN-LAST:event_miUserActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bNew;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenu mEdit;
     private javax.swing.JMenu mFile;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem miExit;
     private javax.swing.JMenuItem miLogout;
+    private javax.swing.JMenuItem miUser;
+    private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
 }
