@@ -7,6 +7,7 @@ package com.adenur.sisfo.view;
 
 import com.adenur.sisfo.dao.DAOFactory;
 import com.adenur.sisfo.dao.UserDAO;
+import com.adenur.sisfo.model.Level;
 import com.adenur.sisfo.model.User;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -195,7 +196,7 @@ public class FrameLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
         String username = tfUsername.getText();
         char[] password = pfPassword.getPassword();
-        User user = new User(username, password, User.Level.OPERATOR_GURU);
+        User user = new User(username, password, Level.OPERATOR_GURU);
         boolean valid = false;
         try {
             valid = userDAO.isValid(user);
