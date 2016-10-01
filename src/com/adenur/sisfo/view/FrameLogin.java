@@ -5,8 +5,12 @@
  */
 package com.adenur.sisfo.view;
 
+import com.adenur.sisfo.Util;
 import com.adenur.sisfo.dao.DAOFactory;
+import com.adenur.sisfo.dao.GuruDAO;
 import com.adenur.sisfo.dao.UserDAO;
+import com.adenur.sisfo.model.AppPropertiesGuru;
+import com.adenur.sisfo.model.Guru;
 import com.adenur.sisfo.model.Level;
 import com.adenur.sisfo.model.User;
 import java.sql.Connection;
@@ -53,7 +57,10 @@ public class FrameLogin extends javax.swing.JFrame {
 
     };
     
+    private AppPropertiesGuru appPropertiesGuru;
     private Connection connection;
+    private Guru guru;
+    private GuruDAO guruDAO;
     private UserDAO userDAO;
 
     /**
@@ -190,6 +197,7 @@ public class FrameLogin extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         userDAO = (UserDAO)DAOFactory.init(connection).get(DAOFactory.Type.USER);
+        guruDAO = (GuruDAO)DAOFactory.init(connection).get(DAOFactory.Type.GURU);
     }//GEN-LAST:event_formWindowOpened
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
@@ -197,9 +205,12 @@ public class FrameLogin extends javax.swing.JFrame {
         String username = tfUsername.getText();
         char[] password = pfPassword.getPassword();
         User user = new User(username, password, Level.OPERATOR_GURU);
+        String tahunAjaran = new String();
         boolean valid = false;
         try {
+            tahunAjaran = Util.getTahunAjaran(connection);
             valid = userDAO.isValid(user);
+            guru = guruDAO.doRetrieve(user);
         }
         catch(SQLException exc) {
             System.err.println(exc.toString());
@@ -207,10 +218,8 @@ public class FrameLogin extends javax.swing.JFrame {
         finally {
             if(valid) {
                 dispose();
-                SwingUtilities.invokeLater(() -> {
-                   // show frame main 
-                   (new FrameMain(connection)).setVisible(true);
-                });
+                appPropertiesGuru = new AppPropertiesGuru(tahunAjaran, user, connection, guru);
+                SwingUtilities.invokeLater(() -> (new FrameMain(appPropertiesGuru).setVisible(true)));
             }
             else {
                 String pesan = "Username/password yang anda masukkan salah";

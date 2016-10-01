@@ -5,7 +5,7 @@
  */
 package com.adenur.sisfo.view;
 
-import java.sql.Connection;
+import com.adenur.sisfo.model.AppProperties;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
  */
 public class FrameMain extends javax.swing.JFrame {
     
-    private Connection connection;
+    private AppProperties appProperties;
 
     /**
      * Creates new form FrameMain
@@ -24,8 +24,8 @@ public class FrameMain extends javax.swing.JFrame {
         initComponents();
     }
     
-    public FrameMain(Connection connection) {
-        this.connection = connection;
+    public FrameMain(AppProperties appProperties) {
+        this.appProperties = appProperties;
         initComponents();
     }
 
@@ -51,6 +51,11 @@ public class FrameMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Informasi Sekolah -- Guru");
         setMinimumSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         toolBar.setRollover(true);
 
@@ -119,16 +124,23 @@ public class FrameMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
         SwingUtilities.invokeLater(() -> {
-            (new FrameLogin(connection)).setVisible(true);
+            (new FrameLogin(getAppProperties().getConnection())).setVisible(true);
         });
     }//GEN-LAST:event_miLogoutActionPerformed
 
     private void miUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miUserActionPerformed
         // TODO add your handling code here:
         SwingUtilities.invokeLater(() -> {
-            (new FrameUser(connection)).setVisible(true);
+            FrameUser frameUser = new FrameUser(appProperties);
+            frameUser.setLocationRelativeTo(this);
+            frameUser.setVisible(true);
         });
     }//GEN-LAST:event_miUserActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        setTitle(String.format("Sistem Informasi Sekolah (%s)", appProperties.getTahunAjaran()));
+    }//GEN-LAST:event_formWindowOpened
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bNew;
@@ -141,4 +153,13 @@ public class FrameMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem miUser;
     private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
+
+    public AppProperties getAppProperties() {
+        return appProperties;
+    }
+
+    public void setAppProperties(AppProperties appProperties) {
+        this.appProperties = appProperties;
+    }
+
 }

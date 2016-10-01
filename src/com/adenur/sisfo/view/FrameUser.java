@@ -5,10 +5,13 @@
  */
 package com.adenur.sisfo.view;
 
-import com.adenur.sisfo.dao.DAOFactory;
 import com.adenur.sisfo.dao.GuruDAO;
 import com.adenur.sisfo.dao.UserDAO;
-import java.sql.Connection;
+import com.adenur.sisfo.model.AppProperties;
+import com.adenur.sisfo.model.AppPropertiesGuru;
+import com.adenur.sisfo.model.Guru;
+import java.time.Instant;
+import java.time.ZoneId;
 
 /**
  *
@@ -16,7 +19,7 @@ import java.sql.Connection;
  */
 public class FrameUser extends javax.swing.JFrame {
     
-    private Connection connection;
+    private AppProperties appProperties;
     private GuruDAO guruDAO;
     private UserDAO userDAO;
 
@@ -27,9 +30,19 @@ public class FrameUser extends javax.swing.JFrame {
         initComponents();
     }
     
-    public FrameUser(Connection connection) {
-        this.connection = connection;
+    public FrameUser(AppProperties appProperties) {
+        this.appProperties = appProperties;
         initComponents();
+    }
+    
+    protected void fillForm(Guru guru) {
+        Instant i = guru.getTanggalLahir().atStartOfDay(ZoneId.systemDefault()).toInstant();
+        
+        tfKode.setText(guru.getKode()); tfKode.setEditable(false);
+        tfNama.setText(guru.getNama());
+        tfNip.setText(guru.getNip());
+        tfTempatLahir.setText(guru.getTempatLahir());
+        spTanggalLahir.setValue(java.util.Date.from(i));
     }
 
     /**
@@ -41,8 +54,34 @@ public class FrameUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgJenisKelamin = new javax.swing.ButtonGroup();
+        bgStatus = new javax.swing.ButtonGroup();
+        cbmAgama = new com.adenur.sisfo.model.ComboBoxModelAgama();
         tabbedPane = new javax.swing.JTabbedPane();
         panelDataDasar = new javax.swing.JPanel();
+        lKode = new javax.swing.JLabel();
+        lNama = new javax.swing.JLabel();
+        lNip = new javax.swing.JLabel();
+        lTempatLahir = new javax.swing.JLabel();
+        lTanggalLahir = new javax.swing.JLabel();
+        lAgama = new javax.swing.JLabel();
+        lJenisKelamin = new javax.swing.JLabel();
+        lStatus = new javax.swing.JLabel();
+        lNoTelepon = new javax.swing.JLabel();
+        lAlamat = new javax.swing.JLabel();
+        tfTempatLahir = new javax.swing.JTextField();
+        tfNip = new javax.swing.JTextField();
+        tfNama = new javax.swing.JTextField();
+        tfKode = new javax.swing.JTextField();
+        tfNoTelepon = new javax.swing.JTextField();
+        cbAgama = new javax.swing.JComboBox<>();
+        rbPria = new javax.swing.JRadioButton();
+        rbWanita = new javax.swing.JRadioButton();
+        rbMenikah = new javax.swing.JRadioButton();
+        rbBelumMenikah = new javax.swing.JRadioButton();
+        spAlamat = new javax.swing.JScrollPane();
+        taAlamat = new javax.swing.JTextArea();
+        spTanggalLahir = new javax.swing.JSpinner();
         panelAkunAplikasi = new javax.swing.JPanel();
         lUsername = new javax.swing.JLabel();
         lPassword = new javax.swing.JLabel();
@@ -61,15 +100,145 @@ public class FrameUser extends javax.swing.JFrame {
             }
         });
 
+        lKode.setText("Kode :");
+
+        lNama.setText("Nama :");
+
+        lNip.setText("NIP :");
+
+        lTempatLahir.setText("Tempat Lahir :");
+
+        lTanggalLahir.setText("Tanggal Lahir :");
+
+        lAgama.setText("Agama :");
+
+        lJenisKelamin.setText("Jenis Kelamin :");
+
+        lStatus.setText("Status :");
+
+        lNoTelepon.setText("No Telepon :");
+
+        lAlamat.setText("Alamat :");
+
+        cbAgama.setModel(cbmAgama);
+
+        bgJenisKelamin.add(rbPria);
+        rbPria.setSelected(true);
+        rbPria.setText("Pria");
+
+        bgJenisKelamin.add(rbWanita);
+        rbWanita.setText("Wanita");
+
+        bgStatus.add(rbMenikah);
+        rbMenikah.setText("Menikah");
+
+        bgStatus.add(rbBelumMenikah);
+        rbBelumMenikah.setSelected(true);
+        rbBelumMenikah.setText("Belum Menikah");
+
+        taAlamat.setColumns(20);
+        taAlamat.setRows(5);
+        spAlamat.setViewportView(taAlamat);
+
+        spTanggalLahir.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(25500000L), new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+        spTanggalLahir.setEditor(new javax.swing.JSpinner.DateEditor(spTanggalLahir, "dd MMMM yyyy"));
+
         javax.swing.GroupLayout panelDataDasarLayout = new javax.swing.GroupLayout(panelDataDasar);
         panelDataDasar.setLayout(panelDataDasarLayout);
         panelDataDasarLayout.setHorizontalGroup(
             panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 443, Short.MAX_VALUE)
+            .addGroup(panelDataDasarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spAlamat)
+                    .addGroup(panelDataDasarLayout.createSequentialGroup()
+                        .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lTempatLahir)
+                            .addComponent(lKode)
+                            .addComponent(lNama)
+                            .addComponent(lNip)
+                            .addComponent(lAgama))
+                        .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDataDasarLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfTempatLahir)
+                                    .addComponent(tfNip)
+                                    .addComponent(tfNama)
+                                    .addComponent(tfKode)))
+                            .addGroup(panelDataDasarLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbAgama, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(panelDataDasarLayout.createSequentialGroup()
+                                        .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(rbPria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(rbMenikah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(rbBelumMenikah)
+                                            .addComponent(rbWanita))
+                                        .addGap(0, 85, Short.MAX_VALUE))
+                                    .addComponent(tfNoTelepon)))))
+                    .addGroup(panelDataDasarLayout.createSequentialGroup()
+                        .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lJenisKelamin)
+                            .addComponent(lStatus)
+                            .addComponent(lNoTelepon)
+                            .addComponent(lAlamat))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelDataDasarLayout.createSequentialGroup()
+                        .addComponent(lTanggalLahir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spTanggalLahir)))
+                .addContainerGap())
         );
         panelDataDasarLayout.setVerticalGroup(
             panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
+            .addGroup(panelDataDasarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lKode)
+                    .addComponent(tfKode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lNama)
+                    .addComponent(tfNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lNip)
+                    .addComponent(tfNip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lTempatLahir)
+                    .addComponent(tfTempatLahir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lTanggalLahir)
+                    .addComponent(spTanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lAgama)
+                    .addComponent(cbAgama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lJenisKelamin)
+                    .addComponent(rbPria)
+                    .addComponent(rbWanita))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lStatus)
+                    .addComponent(rbMenikah)
+                    .addComponent(rbBelumMenikah))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDataDasarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lNoTelepon)
+                    .addComponent(tfNoTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lAlamat)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabbedPane.addTab("Data Dasar", panelDataDasar);
@@ -115,7 +284,7 @@ public class FrameUser extends javax.swing.JFrame {
                 .addGroup(panelAkunAplikasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lKonfirmasi)
                     .addComponent(pfPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addContainerGap(328, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Akun Aplikasi", panelAkunAplikasi);
@@ -166,22 +335,50 @@ public class FrameUser extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        guruDAO = (GuruDAO)DAOFactory.init(connection).get(DAOFactory.Type.GURU);
-        userDAO = (UserDAO)DAOFactory.init(connection).get(DAOFactory.Type.USER);
+        //guruDAO = (GuruDAO)DAOFactory.init(appProperties.getConnection()).get(DAOFactory.Type.GURU);
+        //userDAO = (UserDAO)DAOFactory.init(appProperties.getConnection()).get(DAOFactory.Type.USER);
+        AppPropertiesGuru apGuru = (AppPropertiesGuru)appProperties;
+        fillForm(apGuru.getGuru());
     }//GEN-LAST:event_formWindowOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCancel;
     private javax.swing.JButton bSave;
+    private javax.swing.ButtonGroup bgJenisKelamin;
+    private javax.swing.ButtonGroup bgStatus;
+    private javax.swing.JComboBox<com.adenur.sisfo.model.Agama> cbAgama;
+    private com.adenur.sisfo.model.ComboBoxModelAgama cbmAgama;
+    private javax.swing.JLabel lAgama;
+    private javax.swing.JLabel lAlamat;
+    private javax.swing.JLabel lJenisKelamin;
+    private javax.swing.JLabel lKode;
     private javax.swing.JLabel lKonfirmasi;
+    private javax.swing.JLabel lNama;
+    private javax.swing.JLabel lNip;
+    private javax.swing.JLabel lNoTelepon;
     private javax.swing.JLabel lPassword;
+    private javax.swing.JLabel lStatus;
+    private javax.swing.JLabel lTanggalLahir;
+    private javax.swing.JLabel lTempatLahir;
     private javax.swing.JLabel lUsername;
     private javax.swing.JPanel panelAkunAplikasi;
     private javax.swing.JPanel panelDataDasar;
     private javax.swing.JPasswordField pfPassword1;
     private javax.swing.JPasswordField pfPassword2;
+    private javax.swing.JRadioButton rbBelumMenikah;
+    private javax.swing.JRadioButton rbMenikah;
+    private javax.swing.JRadioButton rbPria;
+    private javax.swing.JRadioButton rbWanita;
+    private javax.swing.JScrollPane spAlamat;
+    private javax.swing.JSpinner spTanggalLahir;
+    private javax.swing.JTextArea taAlamat;
     private javax.swing.JTabbedPane tabbedPane;
+    private javax.swing.JTextField tfKode;
+    private javax.swing.JTextField tfNama;
+    private javax.swing.JTextField tfNip;
+    private javax.swing.JTextField tfNoTelepon;
+    private javax.swing.JTextField tfTempatLahir;
     private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables
 }
